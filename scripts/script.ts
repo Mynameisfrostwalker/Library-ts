@@ -1,3 +1,5 @@
+let main = document.querySelector("main");
+
 interface NovelPrototype  {
     info: () => string,
 }
@@ -26,3 +28,36 @@ const addBookToLibrary = (title: string, author: string, pages: number, read: st
     library.push(new (Book as any)(title, author, pages, read));
 }
 
+function hasKey<Obj>(obj: Obj, key: PropertyKey): key is keyof Obj {
+    return key in obj;
+}
+
+const createCards = () => {
+    library.forEach(book => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        const key = Object.keys(book);
+
+        for(let i = 0; i < key.length; i++) {
+            let property = key[i]
+            if(hasKey(book, property)) {
+                if(property !== "read") {
+                    const p = document.createElement("p");
+                    p.textContent = `${book[property]}`;
+                    card.appendChild(p);
+                } else {
+                    const button = document.createElement("button");
+                    button.textContent = `${book[property]}`;
+                    card.appendChild(button);
+                }
+            }
+        }
+
+        main?.appendChild(card);
+    })
+}
+
+addBookToLibrary("Les miserables", "Victor Hugo", 954, "Not read");
+addBookToLibrary("Stranger", "Albert Camus", 137, "Read");
+
+createCards()
