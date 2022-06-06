@@ -19,8 +19,9 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    font-size: 2rem;
+    font-size: calc(10px + 1vw);
     color: var(--theme-color-4);
+    gap: 30px;
 }
 
 header button {
@@ -36,4 +37,30 @@ header button {
 main {
     flex: 1 1 90vh;
     background-color: var(--theme-background-color);
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 20vw));
+    gap: 2rem;
+}
+
+.card {
+    background-color: var(--theme-color-3);
+    height: max-content;
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: calc(10px + 0.8vw);
+    font-weight: 600;
+    text-align: center;
+    color: var(--theme-background-color);
+}
+
+.card button {
+    border: none;
+    cursor: pointer;
+    background-color: var(--theme-color-4);
+    color: var(--theme-background-color);
+    font-weight: 600;
+    font-size: calc(10px + 0.9vw);
+    width: 100%;
+    padding: 20px;
 }

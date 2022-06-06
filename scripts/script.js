@@ -2,9 +2,9 @@
 let main = document.querySelector("main");
 let library = [];
 function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
+    this.title = `"${title}"`;
+    this.author = `by ${author}`;
+    this.pages = `${pages} pages`;
     this.read = read;
 }
 Book.prototype.info = function () {
@@ -40,5 +40,5 @@ const createCards = () => {
     });
 };
 addBookToLibrary("Les miserables", "Victor Hugo", 954, "Not read");
-addBookToLibrary("Stranger", "Albert Camus", 137, "Read");
+addBookToLibrary("The Stranger", "Albert Camus", 137, "Read");
 createCards();

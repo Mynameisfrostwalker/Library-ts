@@ -7,16 +7,16 @@ interface NovelPrototype  {
 interface Novel extends NovelPrototype  {
     title: string,
     author: string,
-    pages: number,
+    pages: string,
     read: string,
 }
 
 let library: Novel[] = [];
 
 function Book(this: Novel, title: string, author:string, pages:number, read:string): void {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
+    this.title = `"${title}"`;
+    this.author = `by ${author}`;
+    this.pages = `${pages} pages`;
     this.read = read;
 }
 
@@ -58,6 +58,6 @@ const createCards = () => {
 }
 
 addBookToLibrary("Les miserables", "Victor Hugo", 954, "Not read");
-addBookToLibrary("Stranger", "Albert Camus", 137, "Read");
+addBookToLibrary("The Stranger", "Albert Camus", 137, "Read");
 
 createCards()
