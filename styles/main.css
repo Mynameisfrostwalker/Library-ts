@@ -1,0 +1,39 @@
+:root {
+    --theme-header-color: #15EF61;
+    --theme-background-color: #0DC34D;
+    --theme-color-3: #4D0DC3;
+    --theme-color-4: #C34D0D;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+header {
+    flex: 0 1 10vh;
+    background-color: var(--theme-header-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    font-size: 2rem;
+    color: var(--theme-color-4);
+}
+
+header button {
+    outline: none;
+    border: none;
+    background-color: var(--theme-color-4);
+    color: var(--theme-header-color);
+    padding: 10px 50px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+main {
+    flex: 1 1 90vh;
+    background-color: var(--theme-background-color);
+}
