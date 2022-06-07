@@ -37,7 +37,9 @@ const createCards = () => {
                 }
                 else {
                     const button = document.createElement("button");
+                    button.classList.add("read-button");
                     button.textContent = `${book[property]}`;
+                    button.addEventListener("click", changeReadStatus);
                     card.appendChild(button);
                 }
             }
@@ -48,11 +50,12 @@ const createCards = () => {
         card.appendChild(removeButton);
         card.setAttribute("data-index", `${i}`);
         main === null || main === void 0 ? void 0 : main.appendChild(card);
-        removeButton === null || removeButton === void 0 ? void 0 : removeButton.addEventListener("click", removeBookFromLibrary);
+        removeButton.addEventListener("click", removeBookFromLibrary);
     }
 };
 const showForm = () => {
     const removeButtons = document.querySelectorAll(".remove-button");
+    const readButtons = document.querySelectorAll(".read-button");
     form === null || form === void 0 ? void 0 : form.classList.remove("invisible");
     main === null || main === void 0 ? void 0 : main.classList.add("blur");
     header === null || header === void 0 ? void 0 : header.classList.add("blur");
@@ -60,9 +63,13 @@ const showForm = () => {
     removeButtons.forEach((button) => {
         button === null || button === void 0 ? void 0 : button.removeEventListener("click", removeBookFromLibrary);
     });
+    readButtons.forEach((button) => {
+        button === null || button === void 0 ? void 0 : button.removeEventListener("click", changeReadStatus);
+    });
 };
 const submitBook = (e) => {
     const removeButtons = document.querySelectorAll(".remove-button");
+    const readButtons = document.querySelectorAll(".read-button");
     e.preventDefault();
     let inputs = form === null || form === void 0 ? void 0 : form.querySelectorAll("input");
     if (inputs !== undefined) {
@@ -84,6 +91,9 @@ const submitBook = (e) => {
     removeButtons.forEach((button) => {
         button === null || button === void 0 ? void 0 : button.addEventListener("click", removeBookFromLibrary);
     });
+    readButtons.forEach((button) => {
+        button === null || button === void 0 ? void 0 : button.addEventListener("click", changeReadStatus);
+    });
 };
 function removeBookFromLibrary(e) {
     var _a;
@@ -94,8 +104,14 @@ function removeBookFromLibrary(e) {
         createCards();
     }
 }
+function changeReadStatus(e) {
+    var _a;
+    if (e.target instanceof Element) {
+        const card = e.target.parentElement;
+        const attribute = parseInt((_a = card === null || card === void 0 ? void 0 : card.getAttribute("data-index")) !== null && _a !== void 0 ? _a : "");
+        library[attribute].read = library[attribute].read === "Read" ? "Not read" : "Read";
+        createCards();
+    }
+}
 bookButton === null || bookButton === void 0 ? void 0 : bookButton.addEventListener("click", showForm);
 formButton === null || formButton === void 0 ? void 0 : formButton.addEventListener("click", submitBook);
-addBookToLibrary("Les miserables", "Victor Hugo", 954, "Not read");
-addBookToLibrary("The Stranger", "Albert Camus", 137, "Read");
-createCards();

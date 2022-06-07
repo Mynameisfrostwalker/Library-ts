@@ -53,7 +53,9 @@ const createCards = () => {
                     card.appendChild(p);
                 } else {
                     const button = document.createElement("button");
+                    button.classList.add("read-button");
                     button.textContent = `${book[property]}`;
+                    button.addEventListener("click", changeReadStatus)
                     card.appendChild(button);
                 }
             }
@@ -65,24 +67,28 @@ const createCards = () => {
         card.appendChild(removeButton);
         card.setAttribute("data-index", `${i}`)
         main?.appendChild(card);
-        removeButton?.addEventListener("click", removeBookFromLibrary)
+        removeButton.addEventListener("click", removeBookFromLibrary)
     }
 }
 
 const showForm = () => {
     const removeButtons = document.querySelectorAll(".remove-button");
+    const readButtons = document.querySelectorAll(".read-button");
     form?.classList.remove("invisible");
     main?.classList.add("blur");
     header?.classList.add("blur");
     bookButton?.removeEventListener("click", showForm);
-
     removeButtons.forEach((button) => {
         button?.removeEventListener("click", removeBookFromLibrary);
+    })
+    readButtons.forEach((button) => {
+        button?.removeEventListener("click", changeReadStatus);
     })
 }
 
 const submitBook = (e: Event) => {
     const removeButtons = document.querySelectorAll(".remove-button");
+    const readButtons = document.querySelectorAll(".read-button");
     e.preventDefault();
 
     let inputs = form?.querySelectorAll("input");
@@ -111,6 +117,9 @@ const submitBook = (e: Event) => {
     removeButtons.forEach((button) => {
         button?.addEventListener("click", removeBookFromLibrary);
     })
+    readButtons.forEach((button) => {
+        button?.addEventListener("click", changeReadStatus);
+    })
 }
 
 function removeBookFromLibrary(e: Event) {
@@ -122,8 +131,14 @@ function removeBookFromLibrary(e: Event) {
     }
 }
 
+function changeReadStatus(e: Event) {
+    if(e.target instanceof Element){
+        const card = e.target.parentElement;
+        const attribute = parseInt(card?.getAttribute("data-index") ?? "");
+        library[attribute].read = library[attribute].read === "Read" ? "Not read" : "Read";
+        createCards();
+    }
+}
+
 bookButton?.addEventListener("click", showForm);
 formButton?.addEventListener("click", submitBook);
-addBookToLibrary("Les miserables", "Victor Hugo", 954, "Not read");
-addBookToLibrary("The Stranger", "Albert Camus", 137, "Read");
-createCards();
