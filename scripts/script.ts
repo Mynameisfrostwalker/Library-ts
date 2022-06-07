@@ -1,5 +1,8 @@
+let header = document.querySelector("header");
 let main = document.querySelector("main");
+let form = document.querySelector("form");
 let bookButton = document.querySelector(".newBook");
+let formButton = document.querySelector(".form-submit");
 
 interface NovelPrototype  {
     info: () => string,
@@ -34,6 +37,7 @@ function hasKey<Obj>(obj: Obj, key: PropertyKey): key is keyof Obj {
 }
 
 const createCards = () => {
+    main?.replaceChildren();
     library.forEach(book => {
         const card = document.createElement("div");
         card.classList.add("card");
@@ -58,11 +62,39 @@ const createCards = () => {
     })
 }
 
-const addNewBook = () => {
-
+const showForm = () => {
+    form?.classList.remove("invisible");
+    main?.classList.add("blur");
+    header?.classList.add("blur");
+    bookButton?.removeEventListener("click", showForm);
 }
 
-bookButton?.addEventListener("click", addNewBook);
+const submitBook = (e: Event) => {
+    e.preventDefault();
+
+    let inputs = form?.querySelectorAll("input");
+    if(inputs !== undefined) {
+        let title = inputs[0].value;
+        let author = inputs[1].value;
+        let page = inputs[2].value;
+        let read = inputs[3].value === "on" ? "Read" : "Not read";
+        addBookToLibrary(
+            title,
+            author,
+            parseInt(page),
+            read
+        );
+    }
+
+    createCards();
+    form?.classList.add("invisible");
+    main?.classList.remove("blur");
+    header?.classList.remove("blur");
+    bookButton?.addEventListener("click", showForm);
+}
+
+bookButton?.addEventListener("click", showForm);
+formButton?.addEventListener("click", submitBook);
 
 addBookToLibrary("Les miserables", "Victor Hugo", 954, "Not read");
 addBookToLibrary("The Stranger", "Albert Camus", 137, "Read");
