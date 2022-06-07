@@ -1,4 +1,5 @@
 let main = document.querySelector("main");
+let bookButton = document.querySelector(".newBook");
 
 interface NovelPrototype  {
     info: () => string,
@@ -56,6 +57,12 @@ const createCards = () => {
         main?.appendChild(card);
     })
 }
+
+const addNewBook = () => {
+
+}
+
+bookButton?.addEventListener("click", addNewBook);
 
 addBookToLibrary("Les miserables", "Victor Hugo", 954, "Not read");
 addBookToLibrary("The Stranger", "Albert Camus", 137, "Read");

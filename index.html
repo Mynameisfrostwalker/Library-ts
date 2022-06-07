@@ -13,10 +13,34 @@
 <body>
     <header>
         <h1>Library</h1>
-        <button>New book</button>
+        <button class="newBook">New book</button>
     </header>
     <main>
 
     </main>
+
+    <form class="invisible">
+        <section class="book">
+            <p>
+                <input type="text" name="title" id="title" placeholder=" " required>
+                <label for="title">Title</label>
+            </p>
+            <p>
+                <input type="text" name="author" id="author" placeholder=" " required>
+                <label for="author">Author</label>
+            </p>
+            <p>
+                <input type="number" name="pages" id="pages" placeholder=" " required>
+                <label for="pages">Number of Pages</label>
+            </p>
+            <p>
+                <input type="checkbox" name="read" id="read">
+                <label for="read">Have you read this book?</label>
+            </p>
+        </section>
+        <section class="submit">
+            <button type="button">Submit</button>
+        </section>
+    </form>
 </body>
 </html>
