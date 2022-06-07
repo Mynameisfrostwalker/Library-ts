@@ -38,7 +38,8 @@ function hasKey<Obj>(obj: Obj, key: PropertyKey): key is keyof Obj {
 
 const createCards = () => {
     main?.replaceChildren();
-    library.forEach(book => {
+    for(let i = 0; i <library.length; i++) {
+        let book = library[i];
         const card = document.createElement("div");
         card.classList.add("card");
         const key = Object.keys(book);
@@ -58,18 +59,30 @@ const createCards = () => {
             }
         }
 
+        const removeButton = document.createElement("button");
+        removeButton.classList.add("remove-button");
+        removeButton.textContent = "Remove";
+        card.appendChild(removeButton);
+        card.setAttribute("data-index", `${i}`)
         main?.appendChild(card);
-    })
+        removeButton?.addEventListener("click", removeBookFromLibrary)
+    }
 }
 
 const showForm = () => {
+    const removeButtons = document.querySelectorAll(".remove-button");
     form?.classList.remove("invisible");
     main?.classList.add("blur");
     header?.classList.add("blur");
     bookButton?.removeEventListener("click", showForm);
+
+    removeButtons.forEach((button) => {
+        button?.removeEventListener("click", removeBookFromLibrary);
+    })
 }
 
 const submitBook = (e: Event) => {
+    const removeButtons = document.querySelectorAll(".remove-button");
     e.preventDefault();
 
     let inputs = form?.querySelectorAll("input");
@@ -78,12 +91,16 @@ const submitBook = (e: Event) => {
         let author = inputs[1].value;
         let page = inputs[2].value;
         let read = inputs[3].value === "on" ? "Read" : "Not read";
+        console.log(inputs[3].value);
         addBookToLibrary(
             title,
             author,
             parseInt(page),
             read
         );
+        inputs.forEach((input) => {
+            input.value = "";
+        })
     }
 
     createCards();
@@ -91,12 +108,22 @@ const submitBook = (e: Event) => {
     main?.classList.remove("blur");
     header?.classList.remove("blur");
     bookButton?.addEventListener("click", showForm);
+    removeButtons.forEach((button) => {
+        button?.addEventListener("click", removeBookFromLibrary);
+    })
+}
+
+function removeBookFromLibrary(e: Event) {
+    if(e.target instanceof Element){
+        const card = e.target.parentElement;
+        const attribute = parseInt(card?.getAttribute("data-index") ?? "");
+        library.splice(attribute, 1);
+        createCards();
+    }
 }
 
 bookButton?.addEventListener("click", showForm);
 formButton?.addEventListener("click", submitBook);
-
 addBookToLibrary("Les miserables", "Victor Hugo", 954, "Not read");
 addBookToLibrary("The Stranger", "Albert Camus", 137, "Read");
-
-createCards()
+createCards();
