@@ -4,6 +4,10 @@ let form = document.querySelector("form");
 let bookButton = document.querySelector(".newBook");
 let formButton = document.querySelector(".form-submit");
 
+let library: Book[] = [];
+
+/*
+
 interface NovelPrototype  {
     info: () => string,
 }
@@ -14,8 +18,6 @@ interface Novel extends NovelPrototype  {
     pages: string,
     read: string,
 }
-
-let library: Novel[] = [];
 
 function Book(this: Novel, title: string, author:string, pages:number, read:string): void {
     this.title = `"${title}"`;
@@ -28,8 +30,26 @@ Book.prototype.info = function (this: Novel) {
     `${this.title}, by ${this.author}, ${this.pages} pages, ${this.read}.`
 }
 
+*/
+
+class Book {
+    title: string;
+    author: string;
+    pages: string;
+    read: string;
+    constructor(title: string, author: string, pages: number, read: string) {
+        this.title = `"${title}"`;
+        this.author = `by ${author}`;
+        this.pages = `${pages} pages`;
+        this.read = read;
+    }
+    info() {
+        return `${this.title}, by ${this.author}, ${this.pages} pages, ${this.read}.`;
+    }
+}
+
 const addBookToLibrary = (title: string, author: string, pages: number, read: string) => {
-    library.push(new (Book as any)(title, author, pages, read));
+    library.push(new Book(title, author, pages, read));
 }
 
 function hasKey<Obj>(obj: Obj, key: PropertyKey): key is keyof Obj {

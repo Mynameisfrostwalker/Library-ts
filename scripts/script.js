@@ -5,15 +5,42 @@ let form = document.querySelector("form");
 let bookButton = document.querySelector(".newBook");
 let formButton = document.querySelector(".form-submit");
 let library = [];
-function Book(title, author, pages, read) {
+/*
+
+interface NovelPrototype  {
+    info: () => string,
+}
+
+interface Novel extends NovelPrototype  {
+    title: string,
+    author: string,
+    pages: string,
+    read: string,
+}
+
+function Book(this: Novel, title: string, author:string, pages:number, read:string): void {
     this.title = `"${title}"`;
     this.author = `by ${author}`;
     this.pages = `${pages} pages`;
     this.read = read;
 }
-Book.prototype.info = function () {
-    `${this.title}, by ${this.author}, ${this.pages} pages, ${this.read}.`;
-};
+
+Book.prototype.info = function (this: Novel) {
+    `${this.title}, by ${this.author}, ${this.pages} pages, ${this.read}.`
+}
+
+*/
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = `"${title}"`;
+        this.author = `by ${author}`;
+        this.pages = `${pages} pages`;
+        this.read = read;
+    }
+    info() {
+        return `${this.title}, by ${this.author}, ${this.pages} pages, ${this.read}.`;
+    }
+}
 const addBookToLibrary = (title, author, pages, read) => {
     library.push(new Book(title, author, pages, read));
 };
