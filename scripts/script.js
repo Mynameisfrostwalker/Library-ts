@@ -100,6 +100,14 @@ const submitBook = (e) => {
     const readButtons = document.querySelectorAll(".read-button");
     e.preventDefault();
     let inputs = form === null || form === void 0 ? void 0 : form.querySelectorAll("input");
+    if (form instanceof HTMLFormElement) {
+        if (!form.checkValidity()) {
+            inputs === null || inputs === void 0 ? void 0 : inputs.forEach((input) => {
+                showError(input);
+            });
+            return;
+        }
+    }
     if (inputs !== undefined) {
         let title = inputs[0].value;
         let author = inputs[1].value;
@@ -141,26 +149,29 @@ function changeReadStatus(e) {
         createCards();
     }
 }
-function showError(e) {
+function showError(input) {
     var _a;
+    const span = (_a = input.nextElementSibling) === null || _a === void 0 ? void 0 : _a.nextElementSibling;
+    if (span instanceof HTMLElement) {
+        if (input.validity.valueMissing) {
+            span.textContent = "Input should not be left blank!";
+        }
+        else if (input.validity.patternMismatch) {
+            span.textContent = `Value entered is not a number `;
+        }
+        else {
+            span.textContent = "";
+        }
+    }
+}
+function showErrorEvent(e) {
     const input = e.target;
     if (input instanceof HTMLInputElement) {
-        const span = (_a = input.nextElementSibling) === null || _a === void 0 ? void 0 : _a.nextElementSibling;
-        if (span instanceof HTMLElement) {
-            if (input.validity.valueMissing) {
-                span.textContent = "Input should not be left blank!";
-            }
-            else if (input.validity.patternMismatch) {
-                span.textContent = `Value entered is not a ${input.type} `;
-            }
-            else {
-                span.textContent = "";
-            }
-        }
+        showError(input);
     }
 }
 bookButton === null || bookButton === void 0 ? void 0 : bookButton.addEventListener("click", showForm);
 inputs.forEach((input) => {
-    input.addEventListener("input", showError);
+    input.addEventListener("input", showErrorEvent);
 });
 formButton === null || formButton === void 0 ? void 0 : formButton.addEventListener("click", submitBook);

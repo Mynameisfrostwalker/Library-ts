@@ -111,8 +111,18 @@ const submitBook = (e: Event) => {
     const removeButtons = document.querySelectorAll(".remove-button");
     const readButtons = document.querySelectorAll(".read-button");
     e.preventDefault();
-
     let inputs = form?.querySelectorAll("input");
+
+    if (form instanceof HTMLFormElement) {
+        if (!form.checkValidity()) {
+            inputs?.forEach((input) => {
+                showError(input);
+            })
+            return
+        }
+    }
+
+    
     if(inputs !== undefined) {
         let title = inputs[0].value;
         let author = inputs[1].value;
@@ -161,10 +171,8 @@ function changeReadStatus(e: Event) {
     }
 }
 
-function showError(e: Event) {
-    const input = e.target
-    if (input instanceof HTMLInputElement) {
-        const span = input.nextElementSibling?.nextElementSibling;
+function showError(input: HTMLInputElement) {
+    const span = input.nextElementSibling?.nextElementSibling;
         if (span instanceof HTMLElement) {
             if (input.validity.valueMissing) {
                 span.textContent = "Input should not be left blank!"
@@ -174,11 +182,17 @@ function showError(e: Event) {
                 span.textContent = "";
             }
         }
+}
+
+function showErrorEvent(e: Event) {
+    const input = e.target
+    if (input instanceof HTMLInputElement) {
+        showError(input);
     }
 }
 
 bookButton?.addEventListener("click", showForm);
 inputs.forEach((input) => {
-    input.addEventListener("input", showError)
+    input.addEventListener("input", showErrorEvent)
 })
 formButton?.addEventListener("click", submitBook);
