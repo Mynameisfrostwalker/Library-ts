@@ -19,23 +19,27 @@
 
     </main>
 
-    <form class="invisible">
+    <form class="invisible" novalidate>
         <section class="book">
             <p>
                 <input type="text" name="title" id="title" placeholder=" " required>
                 <label for="title">Title</label>
+                <span class="error"></span>
             </p>
             <p>
                 <input type="text" name="author" id="author" placeholder=" " required>
                 <label for="author">Author</label>
+                <span class="error"></span>
             </p>
             <p>
-                <input type="number" name="pages" id="pages" placeholder=" " required>
+                <input type="tel" name="pages" id="pages" placeholder=" " required pattern="\d+">
                 <label for="pages">Number of Pages</label>
+                <span class="error"></span>
             </p>
             <p>
                 <input type="checkbox" name="read" id="read" checked>
                 <label for="read">Have you read this book?</label>
+                <span class="error"></span>
             </p>
         </section>
         <section class="submit">

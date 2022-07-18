@@ -3,6 +3,7 @@
     --theme-background-color: #0DC34D;
     --theme-color-3: #4D0DC3;
     --theme-color-4: #C34D0D;
+    --theme-error: #eeff07;
 }
 
 body {
@@ -55,15 +56,20 @@ form {
     background-color: var(--theme-color-4);
     transform: translate(-50%, -50%);
     padding: 1rem;
-    height: 40vh;
+    min-height: 40vh;
     border-radius: 5px;
+}
+
+form p {
+    display: flex;
+    flex-direction: column;
 }
 
 form p:nth-last-child(n + 1) {
     position: relative;
 }
 
-input[type="text"], input[type="number"] {
+input[type="text"], input[type="tel"] {
     background-color: var(--theme-background-color);
     color: var(--theme-color-3);
     padding: 5px;
@@ -90,7 +96,7 @@ input[type="checkbox"]:checked {
     background-color: var(--theme-color-3);
 }
 
-input[type="text"] ~ label, input[type="number"] ~ label {
+input[type="text"] ~ label, input[type="tel"] ~ label {
     position: absolute;
     top: 5px;
     left: 5px;
@@ -100,15 +106,19 @@ input[type="text"] ~ label, input[type="number"] ~ label {
 
 input[type="text"]:not(:placeholder-shown) ~ label, 
 input[type="text"]:focus ~ label,
-input[type="number"]:focus ~ label,
-input[type="number"]:not(:placeholder-shown) ~ label {
+input[type="tel"]:focus ~ label,
+input[type="tel"]:not(:placeholder-shown) ~ label {
     z-index: -1;
 }
 
 input[type="text"]:focus,
-input[type="number"]:focus {
+input[type="tel"]:focus {
     outline: none;
     border: 3px solid var(--theme-color-3);
+}
+
+span.error {
+    color: var(--theme-error);
 }
 
 .card {

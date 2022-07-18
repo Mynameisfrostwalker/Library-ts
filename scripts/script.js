@@ -4,6 +4,7 @@ let main = document.querySelector("main");
 let form = document.querySelector("form");
 let bookButton = document.querySelector(".newBook");
 let formButton = document.querySelector(".form-submit");
+let inputs = document.querySelectorAll("input");
 let library = [];
 /*
 
@@ -140,5 +141,26 @@ function changeReadStatus(e) {
         createCards();
     }
 }
+function showError(e) {
+    var _a;
+    const input = e.target;
+    if (input instanceof HTMLInputElement) {
+        const span = (_a = input.nextElementSibling) === null || _a === void 0 ? void 0 : _a.nextElementSibling;
+        if (span instanceof HTMLElement) {
+            if (input.validity.valueMissing) {
+                span.textContent = "Input should not be left blank!";
+            }
+            else if (input.validity.patternMismatch) {
+                span.textContent = `Value entered is not a ${input.type} `;
+            }
+            else {
+                span.textContent = "";
+            }
+        }
+    }
+}
 bookButton === null || bookButton === void 0 ? void 0 : bookButton.addEventListener("click", showForm);
+inputs.forEach((input) => {
+    input.addEventListener("input", showError);
+});
 formButton === null || formButton === void 0 ? void 0 : formButton.addEventListener("click", submitBook);

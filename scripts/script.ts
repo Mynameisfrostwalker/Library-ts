@@ -3,6 +3,7 @@ let main = document.querySelector("main");
 let form = document.querySelector("form");
 let bookButton = document.querySelector(".newBook");
 let formButton = document.querySelector(".form-submit");
+let inputs = document.querySelectorAll("input");
 
 let library: Book[] = [];
 
@@ -160,5 +161,24 @@ function changeReadStatus(e: Event) {
     }
 }
 
+function showError(e: Event) {
+    const input = e.target
+    if (input instanceof HTMLInputElement) {
+        const span = input.nextElementSibling?.nextElementSibling;
+        if (span instanceof HTMLElement) {
+            if (input.validity.valueMissing) {
+                span.textContent = "Input should not be left blank!"
+            } else if (input.validity.patternMismatch) {
+                span.textContent = `Value entered is not a number `
+            } else {
+                span.textContent = "";
+            }
+        }
+    }
+}
+
 bookButton?.addEventListener("click", showForm);
+inputs.forEach((input) => {
+    input.addEventListener("input", showError)
+})
 formButton?.addEventListener("click", submitBook);
